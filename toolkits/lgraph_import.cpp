@@ -22,6 +22,7 @@
 #include "import/import_v3.h"
 #include "import/import_client.h"
 #include "import/parse_delimiter.h"
+// #include "tools/lgraph_logger.h"
 
 using namespace fma_common;
 using namespace lgraph;
@@ -201,6 +202,22 @@ int main(int argc, char** argv) {
     }
     fma_common::Logger::Get().SetFormatter(
         std::shared_ptr<fma_common::LogFormatter>(new fma_common::TimedModuleLogFormatter()));
+
+    // Setup lgraph logger
+    lgraph_api::severity_level vlevel;
+    switch (verbose_level) {
+    case 0:
+        vlevel = lgraph_api::ERROR;
+        break;
+    case 1:
+        vlevel = lgraph_api::INFO;
+        break;
+    case 2:
+    default:
+        vlevel = lgraph_api::DEBUG;
+        break;
+    }
+    lgraph_api::LoggerManager::GetInstance().Init("", vlevel);
 
     try {
         if (online) {

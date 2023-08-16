@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 # boost
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost 1.68 REQUIRED COMPONENTS system filesystem)
+find_package(Boost 1.68 REQUIRED COMPONENTS log system filesystem)
 
 # threads
 find_package(Threads REQUIRED)
@@ -75,7 +75,8 @@ set(LGRAPH_API_SRC
         lgraph_api/lgraph_utils.cpp
         lgraph_api/lgraph_vertex_iterator.cpp
         lgraph_api/lgraph_result.cpp
-        lgraph_api/result_element.cpp)
+        lgraph_api/result_element.cpp
+        lgraph_api/lgraph_logger.cpp)
 
 set(TARGET_LGRAPH lgraph)
 
@@ -90,8 +91,8 @@ add_library(${TARGET_LGRAPH} SHARED
         plugin/plugin_manager.cpp
         plugin/python_plugin.cpp
 
-        ${DEPS_INCLUDE_DIR}/tiny-process-library/process.cpp
-        ${DEPS_INCLUDE_DIR}/tiny-process-library/process_unix.cpp
+        tiny-process-library/process.cpp
+        tiny-process-library/process_unix.cpp
         ${PROTO_SRCS})
 
 target_include_directories(${TARGET_LGRAPH} PUBLIC
@@ -122,6 +123,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         target_link_libraries(${TARGET_LGRAPH} PUBLIC
+                boost_log
                 boost_system
                 boost_filesystem
                 omp

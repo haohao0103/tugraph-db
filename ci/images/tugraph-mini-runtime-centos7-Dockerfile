@@ -9,5 +9,5 @@ RUN yum update -y && yum install -y \
 COPY tugraph-mini-3.5.0-1.el7.x86_64.rpm /tugraph-mini-3.5.0-1.el7.x86_64.rpm
 RUN rpm -ivh tugraph-mini-3.5.0-1.el7.x86_64.rpm  && rm /tugraph-mini-3.5.0-1.el7.x86_64.rpm
 
-ENV LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:$LD_LIBRARY_PATH 
 

@@ -3,7 +3,7 @@ set(BRPC_LIB libbrpc.a)
 
 # boost
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost 1.68 REQUIRED COMPONENTS system filesystem)
+find_package(Boost 1.68 REQUIRED COMPONENTS log system filesystem)
 
 if (ENABLE_FULLTEXT_INDEX)
     # jni
@@ -33,6 +33,7 @@ set(TARGET_CPP_CLIENT_RPC lgraph_client_cpp_rpc)
 
 add_library(${TARGET_CPP_CLIENT_RPC} SHARED
         client/cpp/rpc/lgraph_rpc_client.cpp
+        ${LGRAPH_ROOT_DIR}/src/lgraph_api/lgraph_logger.cpp
         ${PROTO_SRCS})
 
 target_include_directories(${TARGET_CPP_CLIENT_RPC} PRIVATE
@@ -45,6 +46,7 @@ target_include_directories(${TARGET_CPP_CLIENT_RPC} PRIVATE
 if (NOT (CMAKE_SYSTEM_NAME STREQUAL "Darwin"))
     target_link_libraries(${TARGET_CPP_CLIENT_RPC}
             PUBLIC
+            ${Boost_LIBRARIES}
             # begin static linking
             -Wl,-Bstatic
             ${BRPC_LIB}
@@ -56,7 +58,7 @@ if (NOT (CMAKE_SYSTEM_NAME STREQUAL "Darwin"))
             gflags
             snappy
             -Wl,-Bstatic
-            ${Boost_LIBRARIES}
+        #     ${Boost_LIBRARIES}
             -static-libstdc++
             -static-libgcc
             libstdc++fs.a
@@ -105,7 +107,7 @@ add_library(${TARGET_CPP_CLIENT_REST} SHARED
         ${PROTO_SRCS})
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-target_link_libraries(${TARGET_CPP_CLIENT_REST} PUBLIC
+    target_link_libraries(${TARGET_CPP_CLIENT_REST} PUBLIC
         lgraph_server_lib
         ${BRPC_LIB}
         boost_system
@@ -137,7 +139,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
             lgraph_client_cpp_rpc)
 else ()
     target_link_libraries(${TARGET_PYTHON_CLIENT} PUBLIC
-            lgraph_client_cpp_rpc
+            lgraph_client_cpp_rpc 
             rt
             lgraph)
 endif ()

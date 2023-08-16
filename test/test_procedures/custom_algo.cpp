@@ -35,3 +35,4 @@ extern "C" LGAPI bool ProcessInTxn(Transaction &txn,
     response = result.Dump();
     return true;
 }
+

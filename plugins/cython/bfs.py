@@ -154,3 +154,4 @@ def Process(db: lgraph_db_python.PyGraphDB, inp: bytes):
     procedure_process(cython.cast(cython.pointer(GraphDB), addr),
                       request, response)
     return (True, json.dumps(response))
+

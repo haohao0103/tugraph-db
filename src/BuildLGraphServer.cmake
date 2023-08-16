@@ -35,7 +35,7 @@ include_directories(${DEPS_INCLUDE_DIR})
 # brpc
 set(BRPC_LIB libbrpc.a)
 
-############### liblgraph_server_lib ######################
+############### liblgraph_server_lib ######################  
 
 set(TARGET_SERVER_LIB lgraph_server_lib)
 
@@ -111,7 +111,7 @@ else ()
             )
 endif ()
 
-############### lgraph_server ######################
+############### lgraph_server ######################  
 
 set(TARGET_SERVER lgraph_server)
 

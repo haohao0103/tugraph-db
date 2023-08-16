@@ -37,7 +37,7 @@ struct BasicConfigs {
         , enable_rpc(false)
         , rpc_port(9091)
         , use_pthread(false)
-        , verbose(1)
+        , log_level("INFO")
         , log_dir()
         , max_log_file_size_mb(64)
         , max_n_log_files(16)
@@ -64,7 +64,7 @@ struct BasicConfigs {
           , enable_rpc(basicConfigs.enable_rpc)
           , rpc_port(basicConfigs.rpc_port)
           , use_pthread(basicConfigs.use_pthread)
-          , verbose(basicConfigs.verbose)
+          , log_level(basicConfigs.log_level)
           , log_dir(basicConfigs.log_dir)
           , max_log_file_size_mb(basicConfigs.max_log_file_size_mb)
           , max_n_log_files(basicConfigs.max_n_log_files)
@@ -94,7 +94,7 @@ struct BasicConfigs {
     uint16_t rpc_port;
     bool use_pthread;
     // log
-    int verbose;
+    std::string log_level;
     std::string log_dir;
     size_t max_log_file_size_mb;
     size_t max_n_log_files;

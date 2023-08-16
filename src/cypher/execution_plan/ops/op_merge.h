@@ -322,7 +322,7 @@ class OpMerge : public OpBase {
                         field_names_on_create, field_values_on_create, field_names_on_match,
                         field_values_on_match, err_msg);
         // check node_res whether valid
-        //
+        // 
         // When given merge node pattern, if none of field names is indexed in given label
         // MergeVertex return a invalid node_res(-1)
         //

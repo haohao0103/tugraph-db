@@ -17,6 +17,7 @@
 #include "core/killable_rw_lock.h"
 #include "db/galaxy.h"
 #include "db/token_manager.h"
+#include "tools/lgraph_logger.h"
 
 lgraph::Galaxy::Galaxy(const std::string& dir, bool create_if_not_exist)
     : Galaxy(Config{dir, false, true, "fma.ai"}, create_if_not_exist, nullptr) {}
@@ -440,7 +441,7 @@ std::vector<std::string> lgraph::Galaxy::SaveSnapshot(const std::string& dir) {
     // TODO: for now, we require TLSRWLock write lock to be held before saving snapshot // NOLINT
     // However, we should be able to leverage MVCC here and thus avoid locking the whole
     // galaxy.
-    _HoldWriteLock(reload_lock_);
+    _HoldReadLock(reload_lock_);
     // clear dir
     auto& fs = fma_common::FileSystem::GetFileSystem(dir);
     if (fs.IsDir(dir)) {
@@ -472,7 +473,7 @@ bool lgraph::Galaxy::IsAdmin(const std::string& user) const {
 lgraph::KillableRWLock& lgraph::Galaxy::GetReloadLock() { return reload_lock_; }
 
 void lgraph::Galaxy::ReloadFromDisk(bool create_if_not_exist) {
-    FMA_DBG_STREAM(logger_) << "Loading DB state from disk";
+    GENERAL_LOG_STREAM(DEBUG, logger_name_) << "Loading DB state from disk";
     _HoldWriteLock(reload_lock_);
     // now we can do anything we want on the galaxy
     // states: meta_, token_manager_ and raft_log_index_

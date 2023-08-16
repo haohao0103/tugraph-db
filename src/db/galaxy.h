@@ -69,6 +69,7 @@ class Galaxy {
     KvTable ip_whitelist_table_;
     std::unordered_set<std::string> ip_whitelist_;
     mutable KillableRWLock ip_whitelist_rw_lock_;
+    std::string logger_name_ = "Galaxy";
 
  public:
     explicit Galaxy(const std::string& dir,

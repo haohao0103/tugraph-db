@@ -27,6 +27,7 @@
 #include "protobuf/ha.pb.h"
 #include "server/proto_convert.h"
 #include "server/state_machine.h"
+#include "tools/lgraph_logger.h"
 
 #ifndef _WIN32
 #include "execution_plan/runtime_context.h"
@@ -453,10 +454,11 @@ void RestServer::Start() {
     init_server();
     try {
         listener_.open().wait();
-        FMA_INFO_STREAM(logger_) << "Listening for REST on port " << config_.port;
+        GENERAL_LOG_STREAM(INFO, logger_name_) << "Listening for REST on port " << config_.port;
         started_ = true;
     } catch (std::exception& e) {
-        FMA_FATAL_STREAM(logger_) << "Error initializing REST server: " << e.what();
+        GENERAL_LOG_STREAM(FATAL, logger_name_) << "Error initializing REST server: " << e.what();
+        EXIT_ON_FATAL(0);
     }
 }
 
@@ -468,13 +470,13 @@ void RestServer::Stop() {
         listener_.close().wait();
         // cpprestsdk has some mysterious bugs that crashes server if we exit too quickly
         fma_common::SleepS(0.5);
-        FMA_INFO_STREAM(logger_) << "REST server stopped.";
+        GENERAL_LOG_STREAM(INFO, logger_name_) << "REST server stopped.";
         started_ = false;
 #ifndef _WIN32
         cypher_scheduler_ = nullptr;
 #endif
     } catch (std::exception& e) {
-        FMA_WARN_STREAM(logger_) << "Failed to stop REST server: " << e.what();
+        GENERAL_LOG_STREAM(WARNING, logger_name_) << "Failed to stop REST server: " << e.what();
     }
 }
 

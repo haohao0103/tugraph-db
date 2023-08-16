@@ -1,6 +1,6 @@
 find_package(PythonLibs 3 REQUIRED)
 
-set(TARGET_PYTHON_API lgraph_python_api)
+set(TARGET_PYTHON_API lgraph_python_api)  
 
 add_library(${TARGET_PYTHON_API} SHARED
         python/python_api.cpp

@@ -34,7 +34,7 @@ std::map<std::string, std::string> lgraph::GlobalConfig::FormatAsOptions() const
     if (enable_rpc) {
         AddOption(options, "RPC port", rpc_port);
     }
-    AddOption(options, "log verbose", verbose);
+    AddOption(options, "log filter level", log_level);
     AddOption(options, "log dir", log_dir);
     AddOption(options, "audit log enable", enable_audit_log);
     if (enable_audit_log) {
@@ -84,7 +84,7 @@ std::map<std::string, lgraph::FieldData> lgraph::GlobalConfig::ToFieldDataMap() 
     if (enable_rpc) {
         v["rpc_port"] = FieldData(rpc_port);
     }
-    v["verbose"] = FieldData(verbose);
+    v["log_level"] = FieldData(log_level);
     // v["log_dir"] = FieldData(log_dir);
     if (enable_audit_log) {
         // v["audit_log_dir"] = FieldData(audit_log_dir);
@@ -153,7 +153,7 @@ fma_common::Configuration lgraph::GlobalConfig::InitConfig
     server_cert_file = cwd + "/server-cert.pem";
     server_key_file = cwd + "/server-key.pem";
     enable_ssl = false;
-    verbose = 1;
+    log_level = "INFO";
     enable_audit_log = false;
     audit_log_expire = 0;
     audit_log_dir = "";
@@ -203,8 +203,8 @@ fma_common::Configuration lgraph::GlobalConfig::InitConfig
     argparser.Add(server_cert_file, "server_cert", true).Comment("SSL server certificate.");
     argparser.Add(server_key_file, "server_key", true).Comment("SSL server private key.");
     argparser.Add(enable_ssl, "ssl_auth", true).Comment("Whether to authenticate by ssl.");
-    argparser.Add(verbose, "verbose,v", true)
-        .Comment("How verbose the output should be. 0-only warnings and errors; 1-normal; 2-debug");
+    argparser.Add(log_level, "log_level", true)
+        .Comment("The log level of debug log, options are DEBUG, INFO, WARNING, ERROR, FATAL.");
     argparser.Add(enable_rpc, "enable_rpc", true).Comment("Whether to enable RPC server.");
     argparser.Add(rpc_port, "rpc_port", true).Comment("The RPC port used in HA mode.");
     argparser.Add(use_pthread, "use_pthread", true)

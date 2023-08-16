@@ -35,3 +35,4 @@ class TestJavaClientAndOGM:
     @pytest.mark.parametrize("exec", [EXECOGMOPT], indirect=True)
     def test_java_ogm(self, bash, server, exec):
         pass
+

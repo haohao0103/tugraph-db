@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 project(TuGraph C CXX)
+	
+# boost
+# set(Boost_USE_STATIC_LIBS ON)
+# find_package(Boost 1.68 REQUIRED COMPONENTS log system filesystem)
 
 ############### lgraph_import ######################
 
@@ -28,6 +32,7 @@ set(TARGET_LGRAPH_MONITOR lgraph_monitor)
 
 add_executable(${TARGET_LGRAPH_MONITOR}
          lgraph_monitor.cpp
+        #  ${LGRAPH_ROOT_DIR}/src/lgraph_api/lgraph_logger.cpp
          ${LGRAPH_ROOT_DIR}/src/monitor/prometheus_monitor.cpp)
 
 target_include_directories(${TARGET_LGRAPH_MONITOR} PUBLIC
@@ -36,6 +41,7 @@ target_include_directories(${TARGET_LGRAPH_MONITOR} PUBLIC
 
 target_link_libraries(${TARGET_LGRAPH_MONITOR}
          lgraph_client_cpp_rpc
+        #  ${Boost_LIBRARIES}
          libprometheus-cpp-pull.a
          libprometheus-cpp-core.a)
 

@@ -343,4 +343,3 @@ class TuGraphClient(AsyncTuGraphClient):
 
     def get_server_info(self):
         return self._sync(partial(AsyncTuGraphClient.get_server_info, self))
-

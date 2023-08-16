@@ -1,16 +1,11 @@
-/**
- * Copyright 2022 AntGroup CO., Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- */
+//  Copyright 2022 AntGroup CO., Ltd.
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//  http://www.apache.org/licenses/LICENSE-2.0
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
 #pragma once
 #include <vector>
@@ -213,6 +208,13 @@ class RpcClient {
                     const std::string& graph = "default", bool json_format = true,
                     double timeout = 0);
 
+    /**
+     * @brief   Get the url of client.
+     *
+     * @returns the url of client.
+     */
+     std::string GetUrl();
+
     void Logout();
 
  private:
@@ -230,6 +232,9 @@ class RpcClient {
 #endif
     std::string CypherResponseExtractor(CypherResponse cypher);
 
+    std::string url;
+    std::string user;
+    std::string password;
     std::string token;
     int64_t server_version;
     // A Channel represents a communication line to a Server. Notice that

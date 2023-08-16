@@ -26,6 +26,7 @@
 #include "fma-common/type_traits.h"
 #include "lgraph/lgraph_types.h"
 #include "protobuf/ha.pb.h"
+#include "tools/lgraph_logger.h"
 
 #ifdef _WIN32
 #include <time.h>
@@ -86,6 +87,7 @@ class AuditLogger {
     int64_t last_log_time_;
     size_t expire_second_;  // s
     fma_common::Logger& logger_;
+    std::string logger_name_ = "AuditLogger";
 
     AuditLogger() : logger_(fma_common::Logger::Get("AuditLogger")) {}
     DISABLE_COPY(AuditLogger);
@@ -200,10 +202,12 @@ class AuditLogger {
         }
         sort(files.begin(), files.end());
         index_ = GetLogIdx();
-        FMA_DBG_STREAM(logger_) << "VertexIndex of audit log : " << index_;
+        // FMA_DBG_STREAM(logger_) << "VertexIndex of audit log : " << index_;
+        GENERAL_LOG_STREAM(DEBUG, logger_name_) << "VertexIndex of audit log : " << index_;
         if (!SetLogFileName())
             throw std::runtime_error("Failed to get audit log file name from int64_t.");
-        FMA_DBG_STREAM(logger_) << "Open audit log file : " << file_name_;
+        // FMA_DBG_STREAM(logger_) << "Open audit log file : " << file_name_;
+        GENERAL_LOG_STREAM(DEBUG, logger_name_) << "Open audit log file : " << file_name_;
         file_.Open(file_name_, fma_common::OutputFmaStream::DEFAULT_BLOCK_SIZE, std::ofstream::app);
         if (!file_.Good()) throw std::runtime_error("Failed to open audit log file for writing.");
 

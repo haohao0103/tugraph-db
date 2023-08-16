@@ -25,7 +25,7 @@ can open or create a database, and then query or modify the database.
 
 API
 ------------------
-.. automodule:: liblgraph_python_api
+.. automodule:: liblgraph_python_api 
    :members:
 
 

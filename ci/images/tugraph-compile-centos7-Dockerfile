@@ -66,7 +66,7 @@ RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/cmake-3.25
 # https://boostorg.jfrog.io/artifactory/main/release/1.68.0/source/boost_1_68_0.tar.gz
 RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/boost_1_68_0.tar.gz \
     && tar xf boost_1_68_0.tar.gz && cd boost_1_68_0 \
-    && ./bootstrap.sh --with-libraries=system,random,thread,filesystem,chrono,atomic,date_time,regex,stacktrace \
+    && ./bootstrap.sh --with-libraries=system,random,thread,filesystem,chrono,atomic,date_time,regex,stacktrace,log \
     && ./b2 -j4 cxxflags="-std=c++14 -fPIC" install && rm -rf /boost_*
 
 # install protobuf
@@ -79,10 +79,10 @@ RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/protobuf-3
 
 # install snappy
 # if it is not accessible, replace it with the link below
-# https://github.com/google/snappy/archive/refs/tags/1.1.9.zip
+# https://github.com/google/snappy/archive/refs/tags/1.1.9.zip 
 # https://github.com/google/googletest/archive/refs/heads/v1.10.x.zip
 # https://github.com/google/benchmark/archive/bf585a2789e30585b4e3ce6baf11ef2750b54677.zip
-RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/snappy-1.1.9.zip \
+RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/snappy-1.1.9.zip \ 
     && unzip snappy-1.1.9.zip && mv snappy-1.1.9 snapppy && cd snapppy/third_party/ \
     && wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/googletest-v1.10.x.zip \
     && unzip googletest-v1.10.x.zip && rm -rf googletest && mv googletest-1.10.x googletest \
@@ -128,7 +128,7 @@ RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/node-v16.6
 # https://github.com/linux-test-project/lcov/releases/download/v1.14/lcov-1.14-1.noarch.rpm
 RUN wget https://tugraph-web.oss-cn-beijing.aliyuncs.com/tugraph/deps/lcov-1.14-1.noarch.rpm \
     && rpm -ivh lcov-1.14-1.noarch.rpm \
-    && rm lcov-1.14-1.noarch.rpm
+    && rm lcov-1.14-1.noarch.rpm 
 
 
 #install maven
